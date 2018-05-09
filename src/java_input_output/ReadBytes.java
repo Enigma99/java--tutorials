@@ -27,11 +27,16 @@ public class ReadBytes {
         }
     }
 
-    // more efficient way using chained streams with buffer
-    // This is also called Decorator Pattern
-    // All read calls are blocking
+    // Buffering (byte array - default size is 8192 size)
+    // Read/write block of bytes into memory buffer (much faster)
+    // You can write blocks of bytes into memory buffer then
+    // flush all of the data to the disk in one and single IO operation
+    // Using BufferedInputStream which is subclass of FilterInputStream
+    // this in turn sub-class from InputStream
     public static void readBinaryUsingBuffer(){
-
+        // Chained Streams - Decorator Pattern
+        // Also open-close principle -- classes should be open for extension
+        // but closed for modification, FileInputStream here is extended
         try (BufferedInputStream input = new BufferedInputStream(new FileInputStream("Animals.txt"))) {
 
             int readByte;
